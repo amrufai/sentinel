@@ -23,14 +23,14 @@ spec:
     spec:
       containers:
         - name: sentinel-api
-          image: sentinel-api:v1.0.0
+          image: sentinel-api:v2.0.0
           ports:
             - containerPort: 3000
           env:
             - name: DEPLOYMENT
               value: "stable"
             - name: VERSION
-              value: "v1.0.0"
+              value: "v2.0.0"
           resources:
             requests:
               cpu: 50m
