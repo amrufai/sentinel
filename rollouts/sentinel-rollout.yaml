@@ -9,9 +9,9 @@ spec:
     canary:
       steps:
         - setWeight: 25
-        - pause: {duration: 30}
+        - pause: {duration: 60}
         - setWeight: 50
-        - pause: {duration: 30}
+        - pause: {duration: 60}
         - setWeight: 100
   selector:
     matchLabels:
@@ -23,14 +23,14 @@ spec:
     spec:
       containers:
         - name: sentinel-api
-          image: sentinel-api:v2.0.0
+          image: sentinel-api:v3.0.0
           ports:
             - containerPort: 3000
           env:
             - name: DEPLOYMENT
-              value: "stable"
+              value: "canary"
             - name: VERSION
-              value: "v2.0.0"
+              value: "v3.0.0"
           resources:
             requests:
               cpu: 50m

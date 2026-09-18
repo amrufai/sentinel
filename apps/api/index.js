@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3000;
 // Set these via env vars at deploy time — this is how canary vs stable
 // identify themselves once Argo Rollouts is in the picture
 const DEPLOYMENT = process.env.DEPLOYMENT || 'stable';
-const VERSION = process.env.VERSION || 'v2.0.0';
+const VERSION = process.env.VERSION || 'v3.0.0';
 const COMMIT = process.env.COMMIT || 'local';
 
 app.get('/health', (req, res) => {
