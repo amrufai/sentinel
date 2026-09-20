@@ -7,10 +7,15 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "start": "node index.js",
+  "test": "jest",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "jest": "^30.5.2",
+    "supertest": "^7.2.2"
   }
 }

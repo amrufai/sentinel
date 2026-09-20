@@ -1,0 +1,52 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test-scan-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install deps
+        working-directory: apps/api
+        run: npm ci
+
+      - name: Run tests
+        working-directory: apps/api
+        run: npm test
+
+      - name: Secrets scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build image
+        working-directory: apps/api
+        run: docker build -t sentinel-api:${{ github.sha }} .
+
+      - name: Trivy vulnerability scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: sentinel-api:${{ github.sha }}
+          severity: HIGH,CRITICAL
+          exit-code: 1
+
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          image: sentinel-api:${{ github.sha }}
+          output-file: sbom.spdx.json
+
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.spdx.json
