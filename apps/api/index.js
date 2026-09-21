@@ -21,6 +21,10 @@ app.get('/version', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`sentinel-api listening on port ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`sentinel-api listening on port ${PORT}`);
+  });
+}
+
+module.exports = app;
