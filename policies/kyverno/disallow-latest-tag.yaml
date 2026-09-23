@@ -11,6 +11,8 @@ spec:
           - resources:
               kinds:
                 - Pod
+              namespaces:
+                - sentinel
       validate:
         message: "Image tag ':latest' is not allowed; use a pinned version."
         pattern:

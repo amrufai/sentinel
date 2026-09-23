@@ -11,6 +11,8 @@ spec:
           - resources:
               kinds:
                 - Pod
+              namespaces:
+                - sentinel
       validate:
         message: "Containers must run as non-root (set runAsNonRoot: true)."
         pattern:

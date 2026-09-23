@@ -3,9 +3,12 @@ kind: Service
 metadata:
   name: sentinel-api
   namespace: sentinel
+  labels:
+    app: sentinel-api
 spec:
   selector:
     app: sentinel-api
   ports:
-    - port: 80
+    - name: http
+      port: 80
       targetPort: 3000
