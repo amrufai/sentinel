@@ -32,6 +32,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// CHAOS MODE: with CHAOS=true, fail ~50% of real traffic (Phase 7 auto-abort demo)
+if (process.env.CHAOS === 'true') {
+  app.use((req, res, next) => {
+    if (req.path !== '/metrics' && req.path !== '/health' && Math.random() < 0.5) {
+      return res.status(500).send('chaos: intentional failure');
+    }
+    next();
+  });
+}
+
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
