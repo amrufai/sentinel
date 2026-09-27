@@ -29,16 +29,14 @@ spec:
         runAsNonRoot: true
       containers:
         - name: sentinel-api
-          image: sentinel-api:v5.1.0
+          image: sentinel-api:v5.0.0
           ports:
             - containerPort: 3000
           env:
             - name: DEPLOYMENT
               value: "canary"
             - name: VERSION
-              value: "v5.1.0"
-            - name: CHAOS
-              value: "true"
+              value: "v5.0.0"
           resources:
             requests:
               cpu: 100m
