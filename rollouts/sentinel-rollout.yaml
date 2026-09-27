@@ -32,7 +32,7 @@ spec:
             - name: DEPLOYMENT
               value: "canary"
             - name: VERSION
-              value: "v4.0.0"
+              value: "v5.0.0"
           resources:
             requests:
               cpu: 100m
