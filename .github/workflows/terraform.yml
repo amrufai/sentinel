@@ -1,0 +1,32 @@
+name: Terraform
+on:
+  push:
+    paths: ['infra/**', 'policies/terraform/**']
+  workflow_dispatch:
+
+jobs:
+  plan-and-check:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: us-east-1
+    defaults:
+      run:
+        working-directory: infra
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform init
+      - run: terraform plan -out=tfplan -var="my_ip=127.0.0.1/32"
+      - run: terraform show -json tfplan > plan.json
+      - name: Install conftest
+        run: |
+          wget -q https://github.com/open-policy-agent/conftest/releases/latest/download/conftest_Linux_x86_64.tar.gz
+          tar xzf conftest_Linux_x86_64.tar.gz conftest
+      - name: Policy gate (Conftest vs plan JSON)
+        working-directory: .
+        run: ./conftest test infra/plan.json --policy policies/terraform --no-color
+      - name: Apply (manual approval required)
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplan
