@@ -23,6 +23,7 @@ jobs:
       - run: terraform plan -out=tfplan
       - run: terraform show -json tfplan > plan.json
       - name: Install conftest
+        working-directory: .
         run: |
           CONFT_VER=$(curl -s https://api.github.com/repos/open-policy-agent/conftest/releases/latest | grep tag_name | cut -d '"' -f 4 | sed 's/v//')
           wget -qO conftest.tar.gz "https://github.com/open-policy-agent/conftest/releases/download/v${CONFT_VER}/conftest_${CONFT_VER}_Linux_x86_64.tar.gz"
