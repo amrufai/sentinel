@@ -3,3 +3,4 @@ kind: Kustomization
 
 resources:
   - sentinel-rollout.yaml
+  - analysis-template.yaml

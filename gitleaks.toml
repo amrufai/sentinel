@@ -1,0 +1,8 @@
+title = "sentinel gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Generated CRD manifests: OpenAPI schema descriptions embed example PEM private keys (false positives)"
+paths = ['''bootstrap/crds/''']
