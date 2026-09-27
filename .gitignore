@@ -1,0 +1,6 @@
+infra/tfplan
+infra/plan.json
+infra/.terraform/
+infra/tfplan
+infra/plan.json
+k3s-sentinel.yaml
