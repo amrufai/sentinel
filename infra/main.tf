@@ -60,6 +60,3 @@ resource "aws_instance" "sentinel" {
   }
 }
 
-output "public_ip" {
-  value = aws_instance.sentinel.public_ip
-}
