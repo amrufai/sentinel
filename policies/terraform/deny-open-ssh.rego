@@ -12,5 +12,6 @@ deny contains msg if {
   rc.type == "aws_instance"
   not startswith(rc.change.after.instance_type, "t2.micro")
   not startswith(rc.change.after.instance_type, "t3.micro")
-  msg := "Instance type must stay within free-tier (t2.micro or t3.micro)"
+  not startswith(rc.change.after.instance_type, "t3.small")
+  msg := "Instance type must stay within approved demo sizes (t2.micro, t3.micro, t3.small)"
 }

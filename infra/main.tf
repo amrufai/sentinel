@@ -8,6 +8,16 @@ terraform {
   }
 }
 
+resource "aws_eip" "sentinel" {
+  domain = "vpc"
+  tags   = { Project = "sentinel" }
+}
+
+resource "aws_eip_association" "sentinel" {
+  instance_id   = aws_instance.sentinel.id
+  allocation_id = aws_eip.sentinel.id
+}
+
 provider "aws" {
   region = var.region
 }

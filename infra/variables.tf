@@ -10,7 +10,7 @@ variable "my_ip" {
 }
 
 variable "instance_type" {
-  description = "Free-tier eligible instance type"
+  description = "Demo instance size (t3.small = 2GB; micros OOM-thrash under k3s)"
   type        = string
-  default     = "t3.micro"
+  default     = "t3.small"
 }
